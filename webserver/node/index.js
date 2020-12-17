@@ -4,11 +4,38 @@ const path = require('path');
 const fs = require('fs');
 
 const server = http.createServer((req, res) => {
-    if (req.url === '/') {
-        res.writeHead(200, {'Content-Type': 'text/html'});
-        res.end('<h1>Home </h1>');
+    let filename = path.join(__dirname, 
+        'public', req.url === '/' ? 'index.html' : req.url);
+
+    let filext = path.extname(filename);
+    let contentType = 'text/html';
+    switch (filext) {
+        case '.html':
+            contentType = 'text/html';
+            break;
+        case '.css':
+            contentType = 'text/css';
+            break;
+        case '.js':
+            contentType = 'application/json';
+            break;
     }
-    console.log("something is running");
+    
+    fs.readFile(filename, (err, content) => {
+        if (err) {
+            if (err.code === 'ENOENT') {
+                res.writeHead(404, contentType);
+                res.end(content);
+            } else {
+                res.writeHead(500, contentType);
+                res.end(content);
+            }
+        } else {
+            res.writeHead(200, contentType);
+            res.end(content);
+        }
+    })
+
 });
 
 const PORT = process.env.PORT || 5000;
