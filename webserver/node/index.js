@@ -23,18 +23,26 @@ const server = http.createServer((req, res) => {
     
     fs.readFile(filename, (err, content) => {
         if (err) {
+            let errfile = 'error.html'
             if (err.code === 'ENOENT') {
-                res.writeHead(404, contentType);
-                res.end(content);
+                fs.readFile(path.join(__dirname, 'public', '404.html'), 
+                                (err, content) => {
+                    res.writeHead(404, contentType);
+                    res.end(content);
+                });
             } else {
-                res.writeHead(500, contentType);
-                res.end(content);
+                fs.readFile(path.join(__dirname, 'public', 'error.html'), 
+                                (err, content) => {
+                    res.writeHead(500, contentType);
+                                
+                    res.end(content);
+                });
             }
         } else {
             res.writeHead(200, contentType);
             res.end(content);
         }
-    })
+    });
 
 });
 
