@@ -1,0 +1,16 @@
+{
+  "name": "webserver",
+  "version": "0.1.0",
+  "description": "rudimentary webserver implemented in node, to be used for exploring webserver internals",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "author": "arup",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  }
+}
