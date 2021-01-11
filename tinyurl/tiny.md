@@ -29,21 +29,23 @@ read / write ration of 100
 
 ## DB Design
 **url**
-shortUrl    -   8 bytes
-bigUrl  -   1 kb
-createTimestamp - 8 b
-expiryTimestamp - 8 b
-userId - 8 b
+- shortUrl    -   8 bytes
+- bigUrl  -   1 kb
+- createTimestamp - 8 b
+- expiryTimestamp - 8 b
+- userId - 8 b
 
 **profile**
-userid  8 b
-profile 1 kb
+- userid  8 b
+- profile 1 kb
 
-space required - (2 kb * 3 m) = 6 GB / month
-bandwidth required - 2kb * 1 m / 24 * 60 * 60 = 25 kb / sec
+- space required - (2 kb * 3 m) = 6 GB / month
+- bandwidth required - 2kb * 1 m / 24 * 60 * 60 = 25 kb / sec
 
 
 ## High Level Architecture
 
-### Iteration 1
+![architecture diagrams](tinyarch_1.jpg)
+![architecture diagrams](tinyarch_2.jpg) 
+
 
