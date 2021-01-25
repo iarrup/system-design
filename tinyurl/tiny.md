@@ -1,6 +1,6 @@
 
 # Tiny URL
-'
+
 ## Requirements Features
 - create and return a short url given a big url
 - Get the corresponding big url given a short url
@@ -18,14 +18,14 @@
 - minimize cost
 
 ## Requirements Volume
-30 million url reads / month
-read / write ration of 100
+- 30 million url reads / month
+- read / write ratio of 100
 
 ## API Contract
 - createShortURL(usertoken, bigURL, expiryTimestamp) -> bigURL
 - getBigURL(shortURL) -> bigURL
 - logon(credentials)
-- logoff()
+- logoff(usertoken)
 
 ## DB Design
 **url**
@@ -49,3 +49,12 @@ read / write ration of 100
 ![architecture diagrams](tinyarch_2.jpg) 
 
 
+## Detailed design
+### URL generation approaches
+**Do a md5 / sha256 hash of the bigURL, and then do a base62 encode.**
+- The result url will be longer than 7 characters. URL would need to be truncated to 7 chars. This will lead to collisions.
+ 
+**Use a long and to a base62 encoding of the number.**
+- Global server / zookeeper keeps a range of numbers. ( eg 1-100, 101, 200 ..)
+- Every application server when it starts, picks a range from the server in a transaction.
+- Application server then uses the numbers in the range to generate short urls locally and persist it in the database as well.
